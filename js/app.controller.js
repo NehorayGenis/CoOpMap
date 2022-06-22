@@ -8,9 +8,11 @@ window.onGetLocs = onGetLocs
 window.onGetUserPos = onGetUserPos
 window.codeAddress = codeAddress
 function onInit() {
+    // buildTable()
     mapService
         .initMap()
         .then(() => {
+            buildTable()
             console.log("Map is ready")
         })
         .catch(() => console.log("Error: cannot init map"))
@@ -52,29 +54,35 @@ function onPanTo(lat = 35.6895, lng = 139.6917) {
     mapService.panTo(lat, lng)
 }
 function buildTable() {
-    const location = getLocFromStorage()
-    const str = locs.maps((loc) => {
+    const location = mapService.getLocFromStorage()
+    console.log(location);
+    const strTHeadHTML = location.maps((loc) => {
+        console.log(loc);
         return `
-        '<tr>
-        '<td class="td id ">${book.id}</td>``<td class="td title">${book.title}</td>``<td class="td price">💲<span>${book.price}</span></td>``<td class="td" onclick="onDelete('${book.id}')"><button class="read btn btn-warning" role="button" >Read</button></td>``<td class="td" onclick="onGoLocation('${book.id}')"><button class="update btn btn-primary" role="button">Update</button></td>`
-        ;("</tr>")
+        <tr>
+        <th class="th id ">${loc.id}</th>
+        <th class="th title">${loc.name}</th>
+        <th class="th created-at">${loc.createdAt}</th>
+        ("</tr>")
+        `
+        ;
     })
+    const strTBodyHTML = location.maps((loc) => {
+        console.log(loc);
+        return `
+        <tr>
+        <td class="td" onclick="onDelete('${book.id}')"><button class="read btn btn-warning" role="button" >Delete</button>
+        <td class="td" onclick="onGoLocation('${book.id}')"><button class="update btn btn-primary" role="button">Go</button></td>
+        ("</tr>")
+        `
+        ;
+    })
+
 }
 function codeAddress() {
     mapService.loadAdress()
 }
 
-// let trs = books.map((book) => {
-//     let strHTML = '<tr>'
-//     strHTML += `<td class="td id ">${book.id}</td>`
-//     strHTML += `<td class="td title">${book.title}</td>`
-//     strHTML += `<td class="td price">💲<span>${book.price}</span></td>`
-//     strHTML += `<td data-trans="read-book" class="td" onclick="onReadBook('${book.id}')"><button class="read btn btn-warning" role="button" >Read</button></td>`
-//     strHTML += `<td data-trans="update" class="td" onclick="onUpdateBook('${book.id}')"><button class="update btn btn-primary" role="button">Update</button></td>`
-//     strHTML += `<td data-trans="delete" class="td" onclick="onDeleteBook('${book.id}')"><button class="delete btn btn-danger" role="button">Delete</button></td>`
-//     strHTML += `<td class="td" onclick="onPlus('${book.id}')"><button class="add-rate btn btn-success" role="button">➕</button></td>`
-//     strHTML += `<td class="td rate-${book.id}" >${book.rate}</td>`
-//     strHTML += `<td class="td" onclick="onMinus('${book.id}')"><button class="decrease-rate btn btn-danger" role="button">➖</button></td>`
-//     strHTML += '</tr>'
-//     return strHTML;
-// })
+function onDelete () {
+
+}

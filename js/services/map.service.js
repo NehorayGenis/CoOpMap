@@ -3,6 +3,7 @@ export const mapService = {
     addMarker,
     panTo,
     loadAdress,
+    getLocFromStorage
 }
 import { utilsService } from "./utils.js"
 import { storageServices } from "./storage-services.js"
@@ -53,39 +54,37 @@ function panTo(lat, lng) {
 }
 
 function _connectGoogleApi() {
-    if (window.google) return Promise.resolve()
+    // if (window.google) return Promise.resolve()
     var elGoogleApi = document.createElement("script")
     elGoogleApi.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}`
     elGoogleApi.async = true
     document.body.append(elGoogleApi)
-    console.log("here", elGoogleApi.src)
-
     return new Promise((resolve, reject) => {
         elGoogleApi.onload = resolve
         elGoogleApi.onerror = () => reject("Google script failed to load")
     })
 }
 
-function getLocation(pos, title, createdAt, updatedAt, weather) {
+function getLocation(pos, title, createdAt) {
     return {
         lat: pos.lat,
         lng: pos.lng,
         name: title,
         createdAt,
-        updatedAt,
-        weather,
         id: utilsService.makeId(),
     }
 }
 
 function loadAdress() {
     var address = document.querySelector(".adress").value
-    geocoder.geocode({ address: address }, function (results, status) {
+    geocoder.geocode({address}, function (results, status) {
         let lat = results[0].geometry.location.lat()
         let lng = results[0].geometry.location.lng()
-        // console.log(results[0].geometry.location.lat())
-        // console.log(results[0].geometry.location.lng())
-        addMarker({ lat, lng }, "title")
+        addMarker({ lat, lng }, address)
         onPanTo(lat, lng)
     })
+}
+
+function getLocFromStorage() {
+    return storageServices.loadFromStorage(LOCATION_KEY)
 }
