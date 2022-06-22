@@ -10,9 +10,7 @@ window.codeAddress = codeAddress
 window.onGoLocation = onGoLocation
 window.onDelete = onDelete
 function onInit() {
-    mapService
-        .initMap(buildTable)
-        .catch((err) => console.error("Error: cannot init map", err))
+    mapService.initMap(buildTable).catch((err) => console.error("Error: cannot init map", err))
 }
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition

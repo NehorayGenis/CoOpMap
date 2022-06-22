@@ -30,8 +30,11 @@ function initMap(cb, lat = 32.0749831, lng = 34.9120554) {
             const lat = mapsMouseEvent.latLng.lat()
             const lng = mapsMouseEvent.latLng.lng()
             const title = prompt("title of the marker?")
-            const timeStamp = Date.now()
-            addMarker({ lat, lng }, title, timeStamp)
+            var currentDate = new Date().toLocaleString().slice(0, 20)
+            console.log(currentDate)
+            if (!title) return
+
+            addMarker({ lat, lng }, title, currentDate)
             cb(getLocFromStorage() || [])
         })
         cb(getLocFromStorage() || [])
