@@ -5,7 +5,8 @@ export const mapService = {
     loadAdress,
     getLocFromStorage,
     goLocation,
-    deleteLocation
+    deleteLocation,
+    setDefualtLocation
 }
 import { utilsService } from "./utils.js"
 import { storageServices } from "./storage-services.js"
@@ -14,7 +15,7 @@ const LOCATION_KEY = "locationDB"
 const API_KEY = "AIzaSyBWllYatcwJ0sya7FywYHPeICt2PwDH-SY"
 var gMap
 var geocoder
-const gLocations = []
+let gLocations = []
 
 function initMap(cb,lat = 32.0749831, lng = 34.9120554) {
     return _connectGoogleApi().then(() => {
@@ -134,4 +135,21 @@ function getWeather(lat, lng) {
     return weatherPrm.then((res) => {
         return res.json()
     })
+}
+
+
+function setDefualtLocation() {
+    const pos = renderFilterByQueryStringParams()
+    const defaultLocation = [
+        {
+            lat: pos.lat,
+            lng: pos.lng,
+            name: 'default location',
+            createdAt: Date.now(),
+            id: utilsService.makeId(),
+        }
+    ]
+    gLocations = defaultLocation
+    storageServices.saveToStorage(LOCATION_KEY, gLocations)
+    return defaultLocation
 }
