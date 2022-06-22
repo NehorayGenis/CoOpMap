@@ -51,7 +51,6 @@ function onPanTo() {
     console.log("Panning the Map")
     mapService.panTo(35.6895, 139.6917)
 }
-<<<<<<< HEAD
 function buildTable(locs) {
     var str = locs.maps((loc) => {})
 }
@@ -69,8 +68,6 @@ function codeAddress() {
         }
     })
 }
-=======
-
 
 // let trs = books.map((book) => {
 //     let strHTML = '<tr>'
@@ -86,4 +83,3 @@ function codeAddress() {
 //     strHTML += '</tr>'
 //     return strHTML;
 // })
->>>>>>> 2657885cb8840a2f70771b2de36450bcff7294d1

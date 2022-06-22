@@ -21,16 +21,12 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
         let geocoder = new google.maps.Geocoder()
 
         gMap.addListener("click", (mapsMouseEvent) => {
-<<<<<<< HEAD
-    
-=======
             const lat = mapsMouseEvent.latLng.lat()
             const lng = mapsMouseEvent.latLng.lng()
             const title = prompt("title of the marker?")
             console.log(mapsMouseEvent.latLng.lat())
             console.log(mapsMouseEvent.latLng.lng())
             addMarker({ lat, lng }, title)
->>>>>>> 63939c305c6f4b40aeffc83ed79f08932ac30683
         })
         console.log("Map!", gMap)
     })
@@ -42,11 +38,7 @@ function addMarker(loc, title = "Hello World!") {
         map: gMap,
         title,
     })
-<<<<<<< HEAD
     const location = getLocation(marker)
-=======
-    console.log(marker)
->>>>>>> 63939c305c6f4b40aeffc83ed79f08932ac30683
     return marker
 }
 
@@ -69,7 +61,7 @@ function _connectGoogleApi() {
     })
 }
 
-function getLocation({pos, map, title,weather,createdAt,updatedAt}) {
+function getLocation({ pos, map, title, weather, createdAt, updatedAt }) {
     return {
         lat: pos.lat,
         lng: pos.lng,
@@ -77,6 +69,6 @@ function getLocation({pos, map, title,weather,createdAt,updatedAt}) {
         name: title,
         weather,
         createdAt,
-        updatedAt
+        updatedAt,
     }
 }
