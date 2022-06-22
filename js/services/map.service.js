@@ -18,6 +18,7 @@ var geocoder
 let gLocations = []
 
 function initMap(cb, lat = 32.0749831, lng = 34.9120554) {
+    gLocations = storageServices.loadFromStorage(LOCATION_KEY)
     return _connectGoogleApi().then(() => {
         var startingLoc = renderFilterByQueryStringParams()
         gMap = new google.maps.Map(document.querySelector("#map"), {
@@ -30,14 +31,12 @@ function initMap(cb, lat = 32.0749831, lng = 34.9120554) {
             const lat = mapsMouseEvent.latLng.lat()
             const lng = mapsMouseEvent.latLng.lng()
             const title = prompt("title of the marker?")
-            var currentDate = new Date().toLocaleString().slice(0, 20)
-            console.log(currentDate)
             if (!title) return
 
-            addMarker({ lat, lng }, title, currentDate)
-            cb(getLocFromStorage())
+            addMarker({ lat, lng }, title, getDate())
+            cb(gLocations)
         })
-        cb(getLocFromStorage())
+        cb(gLocations)
     })
 }
 function renderFilterByQueryStringParams() {
@@ -80,7 +79,6 @@ function panTo(lat, lng) {
         document.querySelector(`.country-location`).innerText = res.sys.country
         document.querySelector(`.city-location`).innerText = res.name
         document.querySelector(`.wind`).innerText = res.wind.speed + " m/s"
-        console.log(res)
     })
 }
 
@@ -111,7 +109,7 @@ function loadAddress() {
     geocoder.geocode({ address }, function (results, status) {
         let lat = results[0].geometry.location.lat()
         let lng = results[0].geometry.location.lng()
-        const timeStamp = Date.now()
+        const timeStamp = getDate()
         addMarker({ lat, lng }, address, timeStamp)
         onPanTo(lat, lng)
     })
@@ -151,11 +149,15 @@ function setDefualtLocation() {
             lat: pos.lat,
             lng: pos.lng,
             name: "default location",
-            createdAt: Date.now(),
+            createdAt: getDate(),
             id: utilsService.makeId(),
         },
     ]
     gLocations = defaultLocation
     storageServices.saveToStorage(LOCATION_KEY, gLocations)
     return defaultLocation
+}
+
+function getDate() {
+    return new Date().toLocaleString().slice(0, 20)
 }

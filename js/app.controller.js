@@ -16,23 +16,18 @@ function onInit() {
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
 function getPosition() {
-    console.log("Getting Pos")
     return new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition(resolve, reject)
     })
 }
 
 function onAddMarker(lat = 32.0749831, lng = 34.9120554) {
-    console.log("Adding a marker")
     mapService.addMarker({ lat, lng })
     buildTable()
-    // setTimeout(() => {
-    // }, 3000)
 }
 
 function onGetLocs() {
     locService.getLocs().then((locs) => {
-        console.log("Locations:", locs)
         document.querySelector(".locs").innerText = JSON.stringify(locs)
     })
 }
@@ -40,7 +35,6 @@ function onGetLocs() {
 function onGetUserPos() {
     getPosition()
         .then((pos) => {
-            console.log("User position is:", pos.coords)
             document.querySelector(".user-pos").innerText = `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`
             mapService.panTo(pos.coords.latitude, pos.coords.longitude)
         })
@@ -49,16 +43,12 @@ function onGetUserPos() {
         })
 }
 function onPanTo(lat = 35.6895, lng = 139.6917) {
-    console.log("Panning the Map")
     mapService.panTo(lat, lng)
 
     buildTable(mapService.getLocFromStorage())
-
 }
 function buildTable(locations) {
-    console.log("checkling", !locations || !locations.length)
     if (!locations || !locations.length) {
-        console.log(locations);
         locations = mapService.setDefualtLocation()
     }
     const strHTML = locations.map((loc) => {
