@@ -3,6 +3,10 @@ export const mapService = {
     addMarker,
     panTo,
 }
+
+import { storageServices } from './storage-services.js'
+
+
 const API_KEY = "AIzaSyBWllYatcwJ0sya7FywYHPeICt2PwDH-SY"
 var gMap
 
