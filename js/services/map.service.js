@@ -86,5 +86,9 @@ function loadAdress() {
         console.log(results[0].geometry.location.lng())
         console.log("hey baby boo")
         console.log("עד מתי")
+        console.log("עד מתי")
+        console.log("עד מתי")
+        console.log("עד מתי")
+        console.log("עד מתי")
     })
 }
