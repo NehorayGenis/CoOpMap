@@ -56,6 +56,7 @@ function onPanTo(lat = 35.6895, lng = 139.6917) {
 
 }
 function buildTable(locations) {
+    console.log("checkling", !locations || !locations.length)
     if (!locations || !locations.length) {
         console.log(locations);
         locations = mapService.setDefualtLocation()
