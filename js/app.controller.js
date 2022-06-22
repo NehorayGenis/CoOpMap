@@ -73,6 +73,7 @@ function codeAddress() {
 function onDelete(id) {
     const locations = mapService.deleteLocation(id)
     buildTable(locations)
+    mapService.initMap(buildTable).catch((err) => console.error("Error: cannot init map", err))
 }
 
 function onGoLocation(id) {
