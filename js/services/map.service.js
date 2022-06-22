@@ -27,25 +27,25 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
             const lat = mapsMouseEvent.latLng.lat()
             const lng = mapsMouseEvent.latLng.lng()
             const title = prompt("title of the marker?")
-            const timeStamp = new Date()
+            const timeStamp = 0
 
             // console.log(mapsMouseEvent.latLng.lat())
             // console.log(mapsMouseEvent.latLng.lng())
-            addMarker({ lat, lng }, title, timeStamp.now())
+            addMarker({ lat, lng }, title, timeStamp)
         })
         console.log("Map!", gMap)
     })
 }
 
 function addMarker(loc, title = "Hello World!", timeStamp) {
-    console.log(loc);
+    console.log(loc)
     var marker = new google.maps.Marker({
         position: loc,
         map: gMap,
         title,
-        timeStamp
+        timeStamp,
     })
-    const location = getLocation(marker.position, marker.title,marker.timeStamp)
+    const location = getLocation(marker.position, marker.title, marker.timeStamp)
     gLocations.push(location)
     storageServices.saveToStorage(LOCATION_KEY, gLocations)
     return marker
@@ -70,17 +70,16 @@ function _connectGoogleApi() {
     })
 }
 
-function getLocation({pos, title,createdAt, updatedAt , weather }) {
-   
-    return {
-        lat: pos.lat,
-        lng: pos.lng,
-        name: title,
-        createdAt,
-        updatedAt,
-        weather,
-        id: utilsService.makeId(),
-    }
+function getLocation({ pos, title, createdAt, updatedAt, weather }) {
+    //return {
+    //    lat: pos.lat,
+    //    lng: pos.lng,
+    //    name: title,
+    //    createdAt,
+    //    updatedAt,
+    //    weather,
+    //    id: utilsService.makeId(),
+    //}
 }
 
 function loadAdress() {
@@ -91,5 +90,6 @@ function loadAdress() {
         // console.log(results[0].geometry.location.lat())
         // console.log(results[0].geometry.location.lng())
         addMarker({ lat, lng }, "title")
+        onPanTo(lat, lng)
     })
 }

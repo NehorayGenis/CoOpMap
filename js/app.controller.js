@@ -47,22 +47,17 @@ function onGetUserPos() {
             console.log("err!!!", err)
         })
 }
-function onPanTo() {
+function onPanTo(lat = 35.6895, lng = 139.6917) {
     console.log("Panning the Map")
-    mapService.panTo(35.6895, 139.6917)
+    mapService.panTo(lat, lng)
 }
 function buildTable() {
-
     const location = getLocFromStorage()
     const str = locs.maps((loc) => {
         return `
         '<tr>
-        '<td class="td id ">${book.id}</td>`
-        `<td class="td title">${book.title}</td>`
-        `<td class="td price">💲<span>${book.price}</span></td>`
-         `<td class="td" onclick="onDelete('${book.id}')"><button class="read btn btn-warning" role="button" >Read</button></td>`
-         `<td class="td" onclick="onGoLocation('${book.id}')"><button class="update btn btn-primary" role="button">Update</button></td>`
-         '</tr>'
+        '<td class="td id ">${book.id}</td>``<td class="td title">${book.title}</td>``<td class="td price">💲<span>${book.price}</span></td>``<td class="td" onclick="onDelete('${book.id}')"><button class="read btn btn-warning" role="button" >Read</button></td>``<td class="td" onclick="onGoLocation('${book.id}')"><button class="update btn btn-primary" role="button">Update</button></td>`
+        ;("</tr>")
     })
 }
 function codeAddress() {
