@@ -13,17 +13,17 @@
         <title>TravelTip</title>
     </head>
     <body>
-        <h1>TravelTip Starter</h1>
         <main>
             <div class="layout">
+                <h1 class="logo">TravelTip</h1>
                 <div id="map" style="width: 100%; height: 400px"></div>
 
-                <section class="">
-                    <input type="text" class="adress" onchange="codeAddress()" />
-                    <button onclick="onAddMarker()" class="btn-add-marker">Add Marker Speific Location</button>
-                    <button onclick="onGetUserPos()" class="btn-user-pos">Get User Position</button>
-                    <button onclick="onGetLocs()" class="btn-get-locs">Get Locations</button>
-                    <button onclick="onPanTo()" class="btn-pan">Pan Map to Tokyo</button>
+                <section class="btns">
+                    <input type="text" class="form-control address" placeholder="Search for your desired location" onchange="codeAddress()" />
+                    <button onclick="onAddMarker()" class="btn btn-primary">Add Marker Speific Location</button>
+                    <button onclick="onGetUserPos()" class="btn btn-primary">Get User Position</button>
+                    <button onclick="onGetLocs()" class="btn btn-primary">Get Locations</button>
+                    <button onclick="onPanTo()" class="btn btn-primary">Pan Map to Tokyo</button>
                 </section>
 
                 <div class="weather-display">
