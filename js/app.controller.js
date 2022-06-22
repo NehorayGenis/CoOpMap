@@ -1,6 +1,6 @@
 import { locService } from "./services/loc.service.js"
 import { mapService } from "./services/map.service.js"
-
+import { storageServices } from "./storage-services.js"
 window.onload = onInit
 window.onAddMarker = onAddMarker
 window.onPanTo = onPanTo
@@ -51,8 +51,19 @@ function onPanTo() {
     console.log("Panning the Map")
     mapService.panTo(35.6895, 139.6917)
 }
-function buildTable(locs) {
-    var str = locs.maps((loc) => {})
+function buildTable() {
+
+    const location = getLocFromStorage()
+    const str = locs.maps((loc) => {
+        return `
+        '<tr>
+        '<td class="td id ">${book.id}</td>`
+        `<td class="td title">${book.title}</td>`
+        `<td class="td price">💲<span>${book.price}</span></td>`
+         `<td class="td" onclick="onDelete('${book.id}')"><button class="read btn btn-warning" role="button" >Read</button></td>`
+         `<td class="td" onclick="onGoLocation('${book.id}')"><button class="update btn btn-primary" role="button">Update</button></td>`
+         '</tr>'
+    })
 }
 function codeAddress() {
     mapService.loadAdress()

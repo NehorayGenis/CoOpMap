@@ -14,18 +14,20 @@
     <body>
         <h1>TravelTip Starter</h1>
         <div id="map" style="width: 100%; height: 400px"></div>
-        <table class="table table-dark table-striped table-borderless">
-            <thead class="thead">
-                <tr>
-                    <th scope="col" data-trans="id"></th>
-                    <th scope="col" data-trans="title"></th>
-                    <th scope="col" data-trans="price"></th>
-                    <th scope="col" colspan="3" data-trans="actions"></th>
-                    <th scope="col" colspan="3" data-trans="rate"></th>
-                </tr>
-            </thead>
-            <tbody class="tbody"></tbody>
-        </table>
+        <div>
+            <table class="table table-dark table-striped table-borderless">
+                <thead class="thead">
+                    <tr>
+                        <th scope="col" data-trans="id"></th>
+                        <th scope="col" data-trans="title"></th>
+                        <th scope="col" data-trans="price"></th>
+                        <th scope="col" colspan="3" data-trans="actions"></th>
+                        <th scope="col" colspan="3" data-trans="rate"></th>
+                    </tr>
+                </thead>
+                <tbody class="tbody"></tbody>
+            </table>
+        </div>
         <input type="text" class="adress" onchange="codeAddress()" />
         <button onclick="onAddMarker()" class="btn-add-marker">Add Marker Speific Location</button>
         <button onclick="onGetUserPos()" class="btn-user-pos">Get User Position</button>
