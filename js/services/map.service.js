@@ -27,21 +27,25 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
             const lat = mapsMouseEvent.latLng.lat()
             const lng = mapsMouseEvent.latLng.lng()
             const title = prompt("title of the marker?")
-            console.log(mapsMouseEvent.latLng.lat())
-            console.log(mapsMouseEvent.latLng.lng())
-            addMarker({ lat, lng }, title)
+            const timeStamp = new Date()
+
+            // console.log(mapsMouseEvent.latLng.lat())
+            // console.log(mapsMouseEvent.latLng.lng())
+            addMarker({ lat, lng }, title, timeStamp.now())
         })
         console.log("Map!", gMap)
     })
 }
 
-function addMarker(loc, title = "Hello World!") {
+function addMarker(loc, title = "Hello World!", timeStamp) {
+    console.log(loc);
     var marker = new google.maps.Marker({
         position: loc,
         map: gMap,
         title,
+        timeStamp
     })
-    const location = getLocation(marker)
+    const location = getLocation(marker.position, marker.title,marker.timeStamp)
     gLocations.push(location)
     storageServices.saveToStorage(LOCATION_KEY, gLocations)
     return marker
@@ -66,16 +70,16 @@ function _connectGoogleApi() {
     })
 }
 
-function getLocation({ pos, map, title, weather, createdAt, updatedAt }) {
+function getLocation({pos, title,createdAt, updatedAt , weather }) {
+   
     return {
         lat: pos.lat,
         lng: pos.lng,
-        map,
-        id: utilsService.makeId(),
         name: title,
-        weather,
         createdAt,
         updatedAt,
+        weather,
+        id: utilsService.makeId(),
     }
 }
 
@@ -84,8 +88,8 @@ function loadAdress() {
     geocoder.geocode({ address: address }, function (results, status) {
         let lat = results[0].geometry.location.lat()
         let lng = results[0].geometry.location.lng()
-        console.log(results[0].geometry.location.lat())
-        console.log(results[0].geometry.location.lng())
+        // console.log(results[0].geometry.location.lat())
+        // console.log(results[0].geometry.location.lng())
         addMarker({ lat, lng }, "title")
     })
 }
