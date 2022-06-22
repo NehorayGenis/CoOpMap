@@ -84,6 +84,7 @@ function loadAdress() {
     geocoder.geocode({ address: address }, function (results, status) {
         console.log(results[0].geometry.location.lat())
         console.log(results[0].geometry.location.lng())
-        console.log('hey baby boo')
+        console.log("hey baby boo")
+        console.log("עד מתי")
     })
 }
