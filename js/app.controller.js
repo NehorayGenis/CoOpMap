@@ -1,6 +1,5 @@
 import { locService } from "./services/loc.service.js"
 import { mapService } from "./services/map.service.js"
-import { storageServices } from "./services/storage-services.js"
 
 window.onload = onInit
 window.onAddMarker = onAddMarker
@@ -50,25 +49,22 @@ function onGetUserPos() {
 }
 function onPanTo(lat = 35.6895, lng = 139.6917) {
     console.log("Panning the Map")
+    buildTable()
+
     mapService.panTo(lat, lng)
-
-    buildTable(mapService.getLocFromStorage())
-
 }
 function buildTable(locations) {
-    locations = mapService.getLocFromStorage()
     if (!locations || !locations.length) {
-        console.log(locations);
         locations = mapService.setDefualtLocation()
     }
     const strHTML = locations.map((loc) => {
         return `
         <tr>
-        <td class="td id ">${loc.id}</td> 
+        <td class="td id ">${loc.id}</td>git 
         <td class="td title">${loc.name}</td>
         <td class="td created-at">${loc.createdAt}</td>
         <td class="td" onclick="onDelete('${loc.id}')"><button class="read btn btn-warning" role="button" >Delete</button>
-        <td class="td" onclick="onGoLocation('${loc.id}')"><button class="update btn btn-success" role="button">Go</button></td>
+        <td class="td" onclick="onGoLocation('${loc.id}')"><button class="update btn btn-primary" role="button">Go</button></td>
         </tr>
         `
     })
@@ -81,8 +77,8 @@ function codeAddress() {
 }
 
 function onDelete(id) {
-    const locations = mapService.deleteLocation(id)
-    buildTable(locations)
+    mapService.deleteLocation(id)
+    buildTable()
 }
 
 function onGoLocation(id) {
