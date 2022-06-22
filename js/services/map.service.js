@@ -6,10 +6,7 @@ export const mapService = {
     getLocFromStorage,
     goLocation,
     deleteLocation,
-<<<<<<< HEAD
-=======
-    setDefualtLocation
->>>>>>> d8ee255588533d992f66a043c0d8431fbafb2a61
+    setDefualtLocation,
 }
 import { utilsService } from "./utils.js"
 import { storageServices } from "./storage-services.js"
@@ -76,7 +73,12 @@ function panTo(lat, lng) {
     window.history.pushState({ path: newUrl }, "", newUrl)
     gMap.panTo(laLatLng)
     let weatherPrm = getWeather(lat, lng).then((res) => {
-        console.log(res.main.temp - 273.15)
+        document.querySelector(`.weather-today`).innerText = res.weather[0].description
+        document.querySelector(`.temp`).innerHTML = `${Math.trunc(res.main.temp - 273.15)} &#8451;`
+        document.querySelector(`.country-location`).innerText = res.sys.country
+        document.querySelector(`.city-location`).innerText = res.name
+        document.querySelector(`.wind`).innerText = res.wind.speed + " m/s"
+        console.log(res)
     })
 }
 
@@ -139,17 +141,16 @@ function getWeather(lat, lng) {
     })
 }
 
-
 function setDefualtLocation() {
     const pos = renderFilterByQueryStringParams()
     const defaultLocation = [
         {
             lat: pos.lat,
             lng: pos.lng,
-            name: 'default location',
+            name: "default location",
             createdAt: Date.now(),
             id: utilsService.makeId(),
-        }
+        },
     ]
     gLocations = defaultLocation
     storageServices.saveToStorage(LOCATION_KEY, gLocations)

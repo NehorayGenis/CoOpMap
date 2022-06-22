@@ -9,7 +9,7 @@
             integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
             crossorigin="anonymous"
         />
-        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/style.css" />
         <title>TravelTip</title>
     </head>
     <body>
@@ -17,7 +17,7 @@
         <main>
             <div class="layout">
                 <div id="map" style="width: 100%; height: 400px"></div>
-                
+
                 <section class="">
                     <input type="text" class="adress" onchange="codeAddress()" />
                     <button onclick="onAddMarker()" class="btn-add-marker">Add Marker Speific Location</button>
@@ -25,10 +25,19 @@
                     <button onclick="onGetLocs()" class="btn-get-locs">Get Locations</button>
                     <button onclick="onPanTo()" class="btn-pan">Pan Map to Tokyo</button>
                 </section>
-                
-        
+
+                <div class="weather-display">
+                    <h1>Weather Today: <span class="weather-today"></span></h1>
+                    <h3>
+                        <span class="country-location"></span>
+                        <span class="city-location"></span>
+                        <span class="location"></span>
+                        <span class="temp"></span>
+                        <span class="wind"></span>
+                    </h3>
+                </div>
                 <p>You are at: <span class="user-pos"></span></p>
-        
+
                 <div class="table-container">
                     <table class="table table-dark table-striped table-borderless">
                         <thead class="thead">
@@ -44,7 +53,7 @@
                 </div>
             </div>
         </main>
-        
+
         <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
