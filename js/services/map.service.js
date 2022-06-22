@@ -16,7 +16,7 @@ var gMap
 var geocoder
 const gLocations = []
 
-function initMap(lat = 32.0749831, lng = 34.9120554) {
+function initMap(cb,lat = 32.0749831, lng = 34.9120554) {
     return _connectGoogleApi().then(() => {
         var startingLoc = renderFilterByQueryStringParams()
         gMap = new google.maps.Map(document.querySelector("#map"), {
@@ -31,8 +31,9 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
             const title = prompt("title of the marker?")
             const timeStamp = Date.now()
             addMarker({ lat, lng }, title, timeStamp)
-            
+            cb(getLocFromStorage() || [])
         })
+        cb(getLocFromStorage() || [])
     })
 }
 function renderFilterByQueryStringParams() {
@@ -58,6 +59,7 @@ function addMarker(loc, title = "Hello World!", timeStamp) {
     })
     const location = getLocation(loc, title, timeStamp)
     gLocations.unshift(location)
+    console.log(gLocations);
     storageServices.saveToStorage(LOCATION_KEY, gLocations)
     return marker
 }
@@ -71,7 +73,6 @@ function panTo(lat, lng) {
     gMap.panTo(laLatLng)
 
 }
-
 
 function _connectGoogleApi() {
     // if (window.google) return Promise.resolve()
@@ -111,7 +112,7 @@ function getLocFromStorage() {
     return storageServices.loadFromStorage(LOCATION_KEY)
 }
 
-function goLocation() {
+function goLocation(id) {
     const locations = mapService.getLocFromStorage()
     const {lat, lng, name, createdAt} = locations.find((loc) => loc.id === id)
     const pos = {lat, lng}
@@ -124,5 +125,4 @@ function  deleteLocation(id) {
     const locIdx = locations.findIndex(loc => loc.id === id)
     gLocations.splice(locIdx, 1)
     storageServices.saveToStorage(LOCATION_KEY, gLocations)
-
 }

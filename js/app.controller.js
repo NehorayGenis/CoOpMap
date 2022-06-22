@@ -10,13 +10,8 @@ window.codeAddress = codeAddress
 window.onGoLocation = onGoLocation
 window.onDelete = onDelete
 function onInit() {
-   
     mapService
-        .initMap()
-        .then(() => {
-            buildTable()
-            console.log("Map is ready")
-        })
+        .initMap(buildTable)
         .catch((err) => console.error("Error: cannot init map", err))
 }
 
@@ -31,9 +26,9 @@ function getPosition() {
 function onAddMarker(lat = 32.0749831, lng = 34.9120554) {
     console.log("Adding a marker")
     mapService.addMarker({ lat, lng })
-    setTimeout(() => {
-        buildTable()
-    }, 3000)
+    buildTable()
+    // setTimeout(() => {
+    // }, 3000)
 }
 
 function onGetLocs() {
@@ -60,8 +55,7 @@ function onPanTo(lat = 35.6895, lng = 139.6917) {
     
     mapService.panTo(lat, lng,)
 }
-function buildTable() {
-    const locations = mapService.getLocFromStorage()
+function buildTable(locations) {
     console.log(locations);
     const strHTML = locations.map((loc) => {
         return `

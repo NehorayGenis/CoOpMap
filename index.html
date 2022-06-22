@@ -9,34 +9,43 @@
             integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
             crossorigin="anonymous"
         />
+        <link rel="stylesheet" href="css/style.css">
         <title>TravelTip</title>
     </head>
     <body>
         <h1>TravelTip Starter</h1>
-        <div id="map" style="width: 100%; height: 400px"></div>
+        <main>
+            <div class="layout">
+                <div id="map" style="width: 100%; height: 400px"></div>
+                
+                <section class="">
+                    <input type="text" class="adress" onchange="codeAddress()" />
+                    <button onclick="onAddMarker()" class="btn-add-marker">Add Marker Speific Location</button>
+                    <button onclick="onGetUserPos()" class="btn-user-pos">Get User Position</button>
+                    <button onclick="onGetLocs()" class="btn-get-locs">Get Locations</button>
+                    <button onclick="onPanTo()" class="btn-pan">Pan Map to Tokyo</button>
+                </section>
+                
         
-        <input type="text" class="adress" onchange="codeAddress()" />
-        <button onclick="onAddMarker()" class="btn-add-marker">Add Marker Speific Location</button>
-        <button onclick="onGetUserPos()" class="btn-user-pos">Get User Position</button>
-        <button onclick="onGetLocs()" class="btn-get-locs">Get Locations</button>
-        <button onclick="onPanTo()" class="btn-pan">Pan Map to Tokyo</button>
-
-        <p>You are at: <span class="user-pos"></span></p>
-        <p>Locations: <span class="locs"></span></p>
-
-        <div class="table-container">
-            <table class="table table-dark table-striped table-borderless">
-                <thead class="thead">
-                    <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>Created At</th>
-                        <th colspan="2">Actions</th>
-                    </tr>
-                </thead>
-                <tbody class="tbody"></tbody>
-            </table>
-        </div>
+                <p>You are at: <span class="user-pos"></span></p>
+                <p>Locations: <span class="locs"></span></p>
+        
+                <div class="table-container">
+                    <table class="table table-dark table-striped table-borderless">
+                        <thead class="thead">
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Created At</th>
+                                <th colspan="2">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+        
         <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
