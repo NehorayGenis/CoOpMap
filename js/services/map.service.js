@@ -89,7 +89,3 @@ function loadAdress() {
         addMarker({ lat, lng }, "title")
     })
 }
-
-function getLocFromStorage() {
-    return storageServices.loadFromStorage(LOCATION_KEY)
-}
