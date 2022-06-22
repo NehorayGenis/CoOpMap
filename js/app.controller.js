@@ -51,6 +51,7 @@ function onGetUserPos() {
 }
 function onPanTo(lat = 35.6895, lng = 139.6917) {
     console.log("Panning the Map")
+
     mapService.panTo(lat, lng)
 }
 function buildTable() {
