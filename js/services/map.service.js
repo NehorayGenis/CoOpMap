@@ -71,7 +71,9 @@ function panTo(lat, lng) {
     const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + queryStringParams
     window.history.pushState({ path: newUrl }, "", newUrl)
     gMap.panTo(laLatLng)
-
+    let weatherPrm = getWeather(lat, lng).then((res) => {
+        console.log(res.main.temp - 273.15)
+    })
 }
 
 function _connectGoogleApi() {
@@ -125,4 +127,11 @@ function  deleteLocation(id) {
     const locIdx = locations.findIndex(loc => loc.id === id)
     gLocations.splice(locIdx, 1)
     storageServices.saveToStorage(LOCATION_KEY, gLocations)
+}
+
+function getWeather(lat, lng) {
+    const weatherPrm = fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=7e8ccb1200a8a51436c13ca1bfe65a6e`)
+    return weatherPrm.then((res) => {
+        return res.json()
+    })
 }

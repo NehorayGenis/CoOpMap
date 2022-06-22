@@ -60,7 +60,7 @@ function buildTable(locations) {
     const strHTML = locations.map((loc) => {
         return `
         <tr>
-        <td class="td id ">${loc.id}</td>
+        <td class="td id ">${loc.id}</td>git 
         <td class="td title">${loc.name}</td>
         <td class="td created-at">${loc.createdAt}</td>
         <td class="td" onclick="onDelete('${loc.id}')"><button class="read btn btn-warning" role="button" >Delete</button>
