@@ -2,7 +2,7 @@ export const mapService = {
     initMap,
     addMarker,
     panTo,
-    loadAdress,
+    loadAddress,
     getLocFromStorage,
     goLocation,
     deleteLocation,
@@ -107,8 +107,8 @@ function getLocation(pos, title, createdAt) {
     }
 }
 
-function loadAdress() {
-    var address = document.querySelector(".adress").value
+function loadAddress() {
+    var address = document.querySelector(".address").value
     geocoder.geocode({ address }, function (results, status) {
         let lat = results[0].geometry.location.lat()
         let lng = results[0].geometry.location.lng()

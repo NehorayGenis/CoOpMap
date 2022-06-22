@@ -74,7 +74,7 @@ function buildTable(locations) {
     elTBody.innerHTML = strHTML
 }
 function codeAddress() {
-    mapService.loadAdress()
+    mapService.loadAddress()
 }
 
 function onDelete(id) {
