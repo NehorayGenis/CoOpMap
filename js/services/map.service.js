@@ -35,9 +35,9 @@ function initMap(cb, lat = 32.0749831, lng = 34.9120554) {
             if (!title) return
 
             addMarker({ lat, lng }, title, currentDate)
-            cb(getLocFromStorage() || [])
+            cb(getLocFromStorage())
         })
-        cb(getLocFromStorage() || [])
+        cb(getLocFromStorage())
     })
 }
 function renderFilterByQueryStringParams() {
@@ -63,7 +63,6 @@ function addMarker(loc, title = "Hello World!", timeStamp) {
     })
     const location = getLocation(loc, title, timeStamp)
     gLocations.unshift(location)
-    console.log(gLocations)
     storageServices.saveToStorage(LOCATION_KEY, gLocations)
     return marker
 }
@@ -135,6 +134,7 @@ function deleteLocation(id) {
     const locIdx = locations.findIndex((loc) => loc.id === id)
     gLocations.splice(locIdx, 1)
     storageServices.saveToStorage(LOCATION_KEY, gLocations)
+    return gLocations
 }
 
 function getWeather(lat, lng) {
