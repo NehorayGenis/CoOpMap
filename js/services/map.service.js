@@ -5,7 +5,7 @@ export const mapService = {
     loadAdress,
     getLocFromStorage,
     goLocation,
-    deleteLocation
+    deleteLocation,
 }
 import { utilsService } from "./utils.js"
 import { storageServices } from "./storage-services.js"
@@ -16,7 +16,7 @@ var gMap
 var geocoder
 const gLocations = []
 
-function initMap(cb,lat = 32.0749831, lng = 34.9120554) {
+function initMap(cb, lat = 32.0749831, lng = 34.9120554) {
     return _connectGoogleApi().then(() => {
         var startingLoc = renderFilterByQueryStringParams()
         gMap = new google.maps.Map(document.querySelector("#map"), {
@@ -43,11 +43,11 @@ function renderFilterByQueryStringParams() {
         lat: +queryStringParams.get("lat") || 0,
         lng: +queryStringParams.get("lng") || 0,
     }
-    if (!filterBy.lat && !filterBy.lng) {
-        filterBy.lat = 32.0749831
-        filterBy.lng = 34.9120554
+    if (!location.lat && !location.lng) {
+        location.lat = 32.0749831
+        location.lng = 34.9120554
     }
-    return filterBy
+    return location
 }
 
 function addMarker(loc, title = "Hello World!", timeStamp) {
@@ -59,7 +59,7 @@ function addMarker(loc, title = "Hello World!", timeStamp) {
     })
     const location = getLocation(loc, title, timeStamp)
     gLocations.unshift(location)
-    console.log(gLocations);
+    console.log(gLocations)
     storageServices.saveToStorage(LOCATION_KEY, gLocations)
     return marker
 }
@@ -109,22 +109,21 @@ function loadAdress() {
     })
 }
 
-
 function getLocFromStorage() {
     return storageServices.loadFromStorage(LOCATION_KEY)
 }
 
 function goLocation(id) {
     const locations = mapService.getLocFromStorage()
-    const {lat, lng, name, createdAt} = locations.find((loc) => loc.id === id)
-    const pos = {lat, lng}
+    const { lat, lng, name, createdAt } = locations.find((loc) => loc.id === id)
+    const pos = { lat, lng }
     mapService.panTo(lat, lng)
-    mapService.addMarker(pos, name,createdAt)
+    mapService.addMarker(pos, name, createdAt)
 }
 
-function  deleteLocation(id) {
+function deleteLocation(id) {
     const locations = getLocFromStorage()
-    const locIdx = locations.findIndex(loc => loc.id === id)
+    const locIdx = locations.findIndex((loc) => loc.id === id)
     gLocations.splice(locIdx, 1)
     storageServices.saveToStorage(LOCATION_KEY, gLocations)
 }
