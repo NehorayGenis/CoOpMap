@@ -2,12 +2,15 @@ export const mapService = {
     initMap,
     addMarker,
     panTo,
+    loadAdress,
 }
-
+import { utilsService } from "./utils.js"
 import { storageServices } from "./storage-services.js"
 
+const LOCATION_KEY = "locationDB"
 const API_KEY = "AIzaSyBWllYatcwJ0sya7FywYHPeICt2PwDH-SY"
 var gMap
+var geocoder
 const gLocations = []
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
@@ -18,7 +21,7 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
             center: { lat, lng },
             zoom: 15,
         })
-        let geocoder = new google.maps.Geocoder()
+        geocoder = new google.maps.Geocoder()
 
         gMap.addListener("click", (mapsMouseEvent) => {
             const lat = mapsMouseEvent.latLng.lat()
@@ -39,6 +42,8 @@ function addMarker(loc, title = "Hello World!") {
         title,
     })
     const location = getLocation(marker)
+    gLocations.push(location)
+    storageServices.saveToStorage(LOCATION_KEY, gLocations)
     return marker
 }
 
@@ -65,10 +70,18 @@ function getLocation({ pos, map, title, weather, createdAt, updatedAt }) {
     return {
         lat: pos.lat,
         lng: pos.lng,
-        id: makeId(),
+        map,
+        id: utilsService.makeId(),
         name: title,
         weather,
         createdAt,
         updatedAt,
     }
+}
+
+function loadAdress() {
+    var address = document.querySelector(".adress").value
+    geocoder.geocode({ address: address }, function (results, status) {
+        console.log(results[0].geometry.location)
+    })
 }
