@@ -17,6 +17,8 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
             center: { lat, lng },
             zoom: 15,
         })
+        let geocoder = new google.maps.Geocoder()
+
         gMap.addListener("click", (mapsMouseEvent) => {
             const lat = mapsMouseEvent.latLng.lat()
             const lng = mapsMouseEvent.latLng.lng()
