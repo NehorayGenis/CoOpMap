@@ -14,20 +14,7 @@
     <body>
         <h1>TravelTip Starter</h1>
         <div id="map" style="width: 100%; height: 400px"></div>
-        <div class="table-container">
-            <table class="table table-dark table-striped table-borderless">
-                <thead class="thead">
-                    <tr>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-                <tbody class="tbody"></tbody>
-            </table>
-        </div>
+        
         <input type="text" class="adress" onchange="codeAddress()" />
         <button onclick="onAddMarker()" class="btn-add-marker">Add Marker Speific Location</button>
         <button onclick="onGetUserPos()" class="btn-user-pos">Get User Position</button>
@@ -37,6 +24,19 @@
         <p>You are at: <span class="user-pos"></span></p>
         <p>Locations: <span class="locs"></span></p>
 
+        <div class="table-container">
+            <table class="table table-dark table-striped table-borderless">
+                <thead class="thead">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Created At</th>
+                        <th colspan="2">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="tbody"></tbody>
+            </table>
+        </div>
         <script
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"

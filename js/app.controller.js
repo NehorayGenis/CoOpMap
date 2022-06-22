@@ -7,15 +7,17 @@ window.onPanTo = onPanTo
 window.onGetLocs = onGetLocs
 window.onGetUserPos = onGetUserPos
 window.codeAddress = codeAddress
+window.onGoLocation = onGoLocation
+window.onDelete = onDelete
 function onInit() {
-    // buildTable()
+   
     mapService
         .initMap()
         .then(() => {
             buildTable()
             console.log("Map is ready")
         })
-        .catch(() => console.log("Error: cannot init map"))
+        .catch((err) => console.error("Error: cannot init map", err))
 }
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
@@ -51,34 +53,26 @@ function onGetUserPos() {
 }
 function onPanTo(lat = 35.6895, lng = 139.6917) {
     console.log("Panning the Map")
-
+    buildTable()
     mapService.panTo(lat, lng)
 }
 function buildTable() {
-    const location = mapService.getLocFromStorage()
-    console.log(location);
-    const strTHeadHTML = location.maps((loc) => {
-        console.log(loc);
+    const locations = mapService.getLocFromStorage()
+    const strHTML = locations.map((loc) => {
         return `
         <tr>
-        <th class="th id ">${loc.id}</th>
-        <th class="th title">${loc.name}</th>
-        <th class="th created-at">${loc.createdAt}</th>
-        ("</tr>")
+        <td class="td id ">${loc.id}</td>
+        <td class="td title">${loc.name}</td>
+        <td class="td created-at">${loc.createdAt}</td>
+        <td class="td" onclick="onDelete('${loc.id}')"><button class="read btn btn-warning" role="button" >Delete</button>
+        <td class="td" onclick="onGoLocation('${loc.id}')"><button class="update btn btn-primary" role="button">Go</button></td>
+        </tr>
         `
-        ;
-    })
-    const strTBodyHTML = location.maps((loc) => {
-        console.log(loc);
-        return `
-        <tr>
-        <td class="td" onclick="onDelete('${book.id}')"><button class="read btn btn-warning" role="button" >Delete</button>
-        <td class="td" onclick="onGoLocation('${book.id}')"><button class="update btn btn-primary" role="button">Go</button></td>
-        ("</tr>")
-        `
-        ;
     })
 
+    const elTBody = document.querySelector('.tbody')
+    elTBody.innerHTML = strHTML
+    
 }
 function codeAddress() {
     mapService.loadAdress()
@@ -86,4 +80,12 @@ function codeAddress() {
 
 function onDelete () {
 
+}
+
+function onGoLocation (id) {
+    const locations = mapService.getLocFromStorage()
+    const {lat, lng, name, createdAt} = locations.find((loc) => loc.id === id)
+    const pos = {lat, lng}
+    mapService.panTo(lat, lng)
+    mapService.addMarker(pos, name,createdAt)
 }

@@ -15,11 +15,8 @@ var geocoder
 const gLocations = []
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
-    console.log("InitMap")
     return _connectGoogleApi().then(() => {
-        console.log("google available")
         var startingLoc = renderFilterByQueryStringParams()
-        console.log(startingLoc)
         gMap = new google.maps.Map(document.querySelector("#map"), {
             center: { lat: startingLoc.lat, lng: startingLoc.lng },
             zoom: 15,
@@ -33,7 +30,6 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
             const timeStamp = Date.now()
             addMarker({ lat, lng }, title, timeStamp)
         })
-        console.log("Map!", gMap)
     })
 }
 function renderFilterByQueryStringParams() {
@@ -43,8 +39,6 @@ function renderFilterByQueryStringParams() {
         lat: +queryStringParams.get("lat") || 0,
         lng: +queryStringParams.get("lng") || 0,
     }
-    console.log(filterBy.lat, !filterBy.lng)
-
     if (!filterBy.lat && !filterBy.lng) {
         filterBy.lat = 32.0749831
         filterBy.lng = 34.9120554
@@ -68,7 +62,6 @@ function addMarker(loc, title = "Hello World!", timeStamp) {
 function panTo(lat, lng) {
     var laLatLng = new google.maps.LatLng(lat, lng)
     var str = `https://nehoraygenis.github.io/CoOpMap/?lat=${lat}&lng=${lng}`
-    console.log("here", str)
     const queryStringParams = `?lat=${lat}&lng=${lng}`
     const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + queryStringParams
     window.history.pushState({ path: newUrl }, "", newUrl)
