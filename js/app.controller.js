@@ -54,7 +54,7 @@ function onPanTo(lat = 35.6895, lng = 139.6917) {
     mapService.panTo(lat, lng)
 }
 function buildTable(locations) {
-    console.log("checkling", !locations || !locations.length)
+    locations = mapService.getLocFromStorage()
     if (!locations || !locations.length) {
         locations = mapService.setDefualtLocation()
     }
@@ -74,7 +74,7 @@ function buildTable(locations) {
     elTBody.innerHTML = strHTML
 }
 function codeAddress() {
-    mapService.loadAddress()
+    mapService.loadAdress()
 }
 
 function onDelete(id) {
