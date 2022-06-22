@@ -56,7 +56,9 @@ function onPanTo(lat = 35.6895, lng = 139.6917) {
     mapService.panTo(lat, lng)
 }
 function buildTable(locations) {
-    console.log(locations);
+    if (!locations || !locations.length) {
+        locations = mapService.setDefualtLocation()
+    }
     const strHTML = locations.map((loc) => {
         return `
         <tr>
