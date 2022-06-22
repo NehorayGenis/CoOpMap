@@ -51,6 +51,7 @@ function onPanTo() {
     console.log("Panning the Map")
     mapService.panTo(35.6895, 139.6917)
 }
+<<<<<<< HEAD
 function buildTable(locs) {
     var str = locs.maps((loc) => {})
 }
@@ -68,3 +69,21 @@ function codeAddress() {
         }
     })
 }
+=======
+
+
+// let trs = books.map((book) => {
+//     let strHTML = '<tr>'
+//     strHTML += `<td class="td id ">${book.id}</td>`
+//     strHTML += `<td class="td title">${book.title}</td>`
+//     strHTML += `<td class="td price">💲<span>${book.price}</span></td>`
+//     strHTML += `<td data-trans="read-book" class="td" onclick="onReadBook('${book.id}')"><button class="read btn btn-warning" role="button" >Read</button></td>`
+//     strHTML += `<td data-trans="update" class="td" onclick="onUpdateBook('${book.id}')"><button class="update btn btn-primary" role="button">Update</button></td>`
+//     strHTML += `<td data-trans="delete" class="td" onclick="onDeleteBook('${book.id}')"><button class="delete btn btn-danger" role="button">Delete</button></td>`
+//     strHTML += `<td class="td" onclick="onPlus('${book.id}')"><button class="add-rate btn btn-success" role="button">➕</button></td>`
+//     strHTML += `<td class="td rate-${book.id}" >${book.rate}</td>`
+//     strHTML += `<td class="td" onclick="onMinus('${book.id}')"><button class="decrease-rate btn btn-danger" role="button">➖</button></td>`
+//     strHTML += '</tr>'
+//     return strHTML;
+// })
+>>>>>>> 2657885cb8840a2f70771b2de36450bcff7294d1
