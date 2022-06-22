@@ -3,7 +3,7 @@ export const mapService = {
     addMarker,
     panTo,
     loadAdress,
-    getLocFromStorage
+    getLocFromStorage,
 }
 import { utilsService } from "./utils.js"
 import { storageServices } from "./storage-services.js"
@@ -56,6 +56,7 @@ function addMarker(loc, title = "Hello World!", timeStamp) {
     const location = getLocation(loc, title, timeStamp)
     gLocations.push(location)
     storageServices.saveToStorage(LOCATION_KEY, gLocations)
+
     return marker
 }
 

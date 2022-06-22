@@ -10,7 +10,6 @@ window.codeAddress = codeAddress
 window.onGoLocation = onGoLocation
 window.onDelete = onDelete
 function onInit() {
-   
     mapService
         .initMap()
         .then(() => {
@@ -70,22 +69,19 @@ function buildTable() {
         `
     })
 
-    const elTBody = document.querySelector('.tbody')
+    const elTBody = document.querySelector(".tbody")
     elTBody.innerHTML = strHTML
-    
 }
 function codeAddress() {
     mapService.loadAdress()
 }
 
-function onDelete () {
+function onDelete() {}
 
-}
-
-function onGoLocation (id) {
+function onGoLocation(id) {
     const locations = mapService.getLocFromStorage()
-    const {lat, lng, name, createdAt} = locations.find((loc) => loc.id === id)
-    const pos = {lat, lng}
+    const { lat, lng, name, createdAt } = locations.find((loc) => loc.id === id)
+    const pos = { lat, lng }
     mapService.panTo(lat, lng)
-    mapService.addMarker(pos, name,createdAt)
+    mapService.addMarker(pos, name, createdAt)
 }
