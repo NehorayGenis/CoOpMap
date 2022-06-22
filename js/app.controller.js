@@ -31,6 +31,9 @@ function getPosition() {
 function onAddMarker(lat = 32.0749831, lng = 34.9120554) {
     console.log("Adding a marker")
     mapService.addMarker({ lat, lng })
+    setTimeout(() => {
+        buildTable()
+    }, 3000)
 }
 
 function onGetLocs() {
@@ -54,10 +57,12 @@ function onGetUserPos() {
 function onPanTo(lat = 35.6895, lng = 139.6917) {
     console.log("Panning the Map")
     buildTable()
-    mapService.panTo(lat, lng)
+    
+    mapService.panTo(lat, lng,)
 }
 function buildTable() {
     const locations = mapService.getLocFromStorage()
+    console.log(locations);
     const strHTML = locations.map((loc) => {
         return `
         <tr>
@@ -78,14 +83,11 @@ function codeAddress() {
     mapService.loadAdress()
 }
 
-function onDelete () {
-
+function onDelete (id) {
+    mapService.deleteLocation(id)
+    buildTable()
 }
 
 function onGoLocation (id) {
-    const locations = mapService.getLocFromStorage()
-    const {lat, lng, name, createdAt} = locations.find((loc) => loc.id === id)
-    const pos = {lat, lng}
-    mapService.panTo(lat, lng)
-    mapService.addMarker(pos, name,createdAt)
+    mapService.goLocation(id)
 }

@@ -3,7 +3,9 @@ export const mapService = {
     addMarker,
     panTo,
     loadAdress,
-    getLocFromStorage
+    getLocFromStorage,
+    goLocation,
+    deleteLocation
 }
 import { utilsService } from "./utils.js"
 import { storageServices } from "./storage-services.js"
@@ -29,6 +31,7 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
             const title = prompt("title of the marker?")
             const timeStamp = Date.now()
             addMarker({ lat, lng }, title, timeStamp)
+            
         })
     })
 }
@@ -54,7 +57,7 @@ function addMarker(loc, title = "Hello World!", timeStamp) {
         timeStamp,
     })
     const location = getLocation(loc, title, timeStamp)
-    gLocations.push(location)
+    gLocations.unshift(location)
     storageServices.saveToStorage(LOCATION_KEY, gLocations)
     return marker
 }
@@ -66,7 +69,9 @@ function panTo(lat, lng) {
     const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + queryStringParams
     window.history.pushState({ path: newUrl }, "", newUrl)
     gMap.panTo(laLatLng)
+
 }
+
 
 function _connectGoogleApi() {
     // if (window.google) return Promise.resolve()
@@ -95,11 +100,29 @@ function loadAdress() {
     geocoder.geocode({ address }, function (results, status) {
         let lat = results[0].geometry.location.lat()
         let lng = results[0].geometry.location.lng()
-        addMarker({ lat, lng }, address)
+        const timeStamp = Date.now()
+        addMarker({ lat, lng }, address, timeStamp)
         onPanTo(lat, lng)
     })
 }
 
+
 function getLocFromStorage() {
     return storageServices.loadFromStorage(LOCATION_KEY)
+}
+
+function goLocation() {
+    const locations = mapService.getLocFromStorage()
+    const {lat, lng, name, createdAt} = locations.find((loc) => loc.id === id)
+    const pos = {lat, lng}
+    mapService.panTo(lat, lng)
+    mapService.addMarker(pos, name,createdAt)
+}
+
+function  deleteLocation(id) {
+    const locations = getLocFromStorage()
+    const locIdx = locations.findIndex(loc => loc.id === id)
+    gLocations.splice(locIdx, 1)
+    storageServices.saveToStorage(LOCATION_KEY, gLocations)
+
 }
