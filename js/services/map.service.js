@@ -17,8 +17,10 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
     console.log("InitMap")
     return _connectGoogleApi().then(() => {
         console.log("google available")
+        var startingLoc = renderFilterByQueryStringParams()
+        console.log(startingLoc)
         gMap = new google.maps.Map(document.querySelector("#map"), {
-            center: { lat, lng },
+            center: { lat: startingLoc.lat, lng: startingLoc.lng },
             zoom: 15,
         })
         geocoder = new google.maps.Geocoder()
@@ -32,6 +34,20 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
         })
         console.log("Map!", gMap)
     })
+}
+function renderFilterByQueryStringParams() {
+    // Retrieve data from the current query-params
+    const queryStringParams = new URLSearchParams(window.location.search)
+    const filterBy = {
+        lat: +queryStringParams.get("lat") || 0,
+        lng: +queryStringParams.get("lng") || 0,
+    }
+    console.log(filterBy.lat, !filterBy.lng)
+
+    if (!filterBy.lat && !filterBy.lng) {
+        ;(filterBy.lat = 32.0749831), (filterBy.lng = 34.9120554)
+    }
+    return filterBy
 }
 
 function addMarker(loc, title = "Hello World!", timeStamp) {
@@ -49,6 +65,8 @@ function addMarker(loc, title = "Hello World!", timeStamp) {
 
 function panTo(lat, lng) {
     var laLatLng = new google.maps.LatLng(lat, lng)
+    var str = `https://nehoraygenis.github.io/CoOpMap/?lat=${lat}&lng=${lng}`
+    console.log("here", str)
     gMap.panTo(laLatLng)
 }
 
@@ -80,7 +98,7 @@ function getLocation(pos, title, createdAt, updatedAt, weather) {
 
 function loadAdress() {
     var address = document.querySelector(".adress").value
-    geocoder.geocode({ address: address }, function (results, status) {
+    geocoder.geocode({ address }, function (results, status) {
         let lat = results[0].geometry.location.lat()
         let lng = results[0].geometry.location.lng()
         // console.log(results[0].geometry.location.lat())
