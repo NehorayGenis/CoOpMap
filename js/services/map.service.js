@@ -4,8 +4,7 @@ export const mapService = {
     panTo,
 }
 
-import { storageServices } from './storage-services.js'
-
+import { storageServices } from "./storage-services.js"
 
 const API_KEY = "AIzaSyBWllYatcwJ0sya7FywYHPeICt2PwDH-SY"
 var gMap
@@ -19,19 +18,24 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
             zoom: 15,
         })
         gMap.addListener("click", (mapsMouseEvent) => {
+            const lat = mapsMouseEvent.latLng.lat()
+            const lng = mapsMouseEvent.latLng.lng()
+            const title = prompt("title of the marker?")
             console.log(mapsMouseEvent.latLng.lat())
             console.log(mapsMouseEvent.latLng.lng())
+            addMarker({ lat, lng }, title)
         })
         console.log("Map!", gMap)
     })
 }
 
-function addMarker(loc) {
+function addMarker(loc, title = "Hello World!") {
     var marker = new google.maps.Marker({
         position: loc,
         map: gMap,
-        title: "Hello World!",
+        title,
     })
+    console.log(marker)
     return marker
 }
 
