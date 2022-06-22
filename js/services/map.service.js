@@ -9,6 +9,7 @@ import { storageServices } from './storage-services.js'
 
 const API_KEY = "AIzaSyBWllYatcwJ0sya7FywYHPeICt2PwDH-SY"
 var gMap
+const gLocations = []
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
     console.log("InitMap")
@@ -19,8 +20,7 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
             zoom: 15,
         })
         gMap.addListener("click", (mapsMouseEvent) => {
-            console.log(mapsMouseEvent.latLng.lat())
-            console.log(mapsMouseEvent.latLng.lng())
+    
         })
         console.log("Map!", gMap)
     })
@@ -32,6 +32,7 @@ function addMarker(loc) {
         map: gMap,
         title: "Hello World!",
     })
+    const location = getLocation(marker)
     return marker
 }
 
@@ -52,4 +53,16 @@ function _connectGoogleApi() {
         elGoogleApi.onload = resolve
         elGoogleApi.onerror = () => reject("Google script failed to load")
     })
+}
+
+function getLocation({pos, map, title,weather,createdAt,updatedAt}) {
+    return {
+        lat: pos.lat,
+        lng: pos.lng,
+        id: makeId(),
+        name: title,
+        weather,
+        createdAt,
+        updatedAt
+    }
 }
