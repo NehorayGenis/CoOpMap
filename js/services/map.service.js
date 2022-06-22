@@ -45,7 +45,8 @@ function renderFilterByQueryStringParams() {
     console.log(filterBy.lat, !filterBy.lng)
 
     if (!filterBy.lat && !filterBy.lng) {
-        ;(filterBy.lat = 32.0749831), (filterBy.lng = 34.9120554)
+        filterBy.lat = 32.0749831
+        filterBy.lng = 34.9120554
     }
     return filterBy
 }
@@ -67,6 +68,9 @@ function panTo(lat, lng) {
     var laLatLng = new google.maps.LatLng(lat, lng)
     var str = `https://nehoraygenis.github.io/CoOpMap/?lat=${lat}&lng=${lng}`
     console.log("here", str)
+    const queryStringParams = `?lat=${lat}&lng=${lng}`
+    const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + queryStringParams
+    window.history.pushState({ path: newUrl }, "", newUrl)
     gMap.panTo(laLatLng)
 }
 
