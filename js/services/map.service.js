@@ -27,10 +27,7 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
             const lat = mapsMouseEvent.latLng.lat()
             const lng = mapsMouseEvent.latLng.lng()
             const title = prompt("title of the marker?")
-            const timeStamp = 0
-
-            // console.log(mapsMouseEvent.latLng.lat())
-            // console.log(mapsMouseEvent.latLng.lng())
+            const timeStamp = Date.now()
             addMarker({ lat, lng }, title, timeStamp)
         })
         console.log("Map!", gMap)
@@ -38,14 +35,13 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
 }
 
 function addMarker(loc, title = "Hello World!", timeStamp) {
-    console.log(loc)
     var marker = new google.maps.Marker({
         position: loc,
         map: gMap,
         title,
         timeStamp,
     })
-    const location = getLocation(marker.position, marker.title, marker.timeStamp)
+    const location = getLocation(loc, title, timeStamp)
     gLocations.push(location)
     storageServices.saveToStorage(LOCATION_KEY, gLocations)
     return marker
@@ -57,7 +53,7 @@ function panTo(lat, lng) {
 }
 
 function _connectGoogleApi() {
-    if (window.google) return Promise.resolve() //TODO: Enter your API Key
+    if (window.google) return Promise.resolve()
     var elGoogleApi = document.createElement("script")
     elGoogleApi.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}`
     elGoogleApi.async = true
@@ -70,16 +66,16 @@ function _connectGoogleApi() {
     })
 }
 
-function getLocation({ pos, title, createdAt, updatedAt, weather }) {
-    //return {
-    //    lat: pos.lat,
-    //    lng: pos.lng,
-    //    name: title,
-    //    createdAt,
-    //    updatedAt,
-    //    weather,
-    //    id: utilsService.makeId(),
-    //}
+function getLocation(pos, title, createdAt, updatedAt, weather) {
+    return {
+        lat: pos.lat,
+        lng: pos.lng,
+        name: title,
+        createdAt,
+        updatedAt,
+        weather,
+        id: utilsService.makeId(),
+    }
 }
 
 function loadAdress() {
