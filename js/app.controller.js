@@ -52,8 +52,8 @@ function onGetUserPos() {
 function onPanTo(lat = 35.6895, lng = 139.6917) {
     console.log("Panning the Map")
     buildTable()
-    
-    mapService.panTo(lat, lng,)
+
+    mapService.panTo(lat, lng)
 }
 function buildTable(locations) {
     console.log(locations);
@@ -69,19 +69,18 @@ function buildTable(locations) {
         `
     })
 
-    const elTBody = document.querySelector('.tbody')
+    const elTBody = document.querySelector(".tbody")
     elTBody.innerHTML = strHTML
-    
 }
 function codeAddress() {
     mapService.loadAdress()
 }
 
-function onDelete (id) {
+function onDelete(id) {
     mapService.deleteLocation(id)
     buildTable()
 }
 
-function onGoLocation (id) {
+function onGoLocation(id) {
     mapService.goLocation(id)
 }
