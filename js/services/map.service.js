@@ -82,9 +82,10 @@ function getLocation({ pos, map, title, weather, createdAt, updatedAt }) {
 function loadAdress() {
     var address = document.querySelector(".adress").value
     geocoder.geocode({ address: address }, function (results, status) {
+        let lat = results[0].geometry.location.lat()
+        let lng = results[0].geometry.location.lng()
         console.log(results[0].geometry.location.lat())
         console.log(results[0].geometry.location.lng())
-        console.log("hey baby boo")
-        console.log("עד מתי")
+        addMarker({ lat, lng }, "title")
     })
 }
