@@ -4,6 +4,8 @@ export const mapService = {
     panTo,
     loadAdress,
     getLocFromStorage,
+    goLocation,
+    deleteLocation,
 }
 import { utilsService } from "./utils.js"
 import { storageServices } from "./storage-services.js"
@@ -54,7 +56,7 @@ function addMarker(loc, title = "Hello World!", timeStamp) {
         timeStamp,
     })
     const location = getLocation(loc, title, timeStamp)
-    gLocations.push(location)
+    gLocations.unshift(location)
     storageServices.saveToStorage(LOCATION_KEY, gLocations)
 
     return marker
@@ -96,11 +98,27 @@ function loadAdress() {
     geocoder.geocode({ address }, function (results, status) {
         let lat = results[0].geometry.location.lat()
         let lng = results[0].geometry.location.lng()
-        addMarker({ lat, lng }, address)
+        const timeStamp = Date.now()
+        addMarker({ lat, lng }, address, timeStamp)
         onPanTo(lat, lng)
     })
 }
 
 function getLocFromStorage() {
     return storageServices.loadFromStorage(LOCATION_KEY)
+}
+
+function goLocation() {
+    const locations = mapService.getLocFromStorage()
+    const { lat, lng, name, createdAt } = locations.find((loc) => loc.id === id)
+    const pos = { lat, lng }
+    mapService.panTo(lat, lng)
+    mapService.addMarker(pos, name, createdAt)
+}
+
+function deleteLocation(id) {
+    const locations = getLocFromStorage()
+    const locIdx = locations.findIndex((loc) => loc.id === id)
+    gLocations.splice(locIdx, 1)
+    storageServices.saveToStorage(LOCATION_KEY, gLocations)
 }
